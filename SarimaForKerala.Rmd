@@ -1,0 +1,46 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(ts343)
+library(forecast)
+library(readr)
+```
+
+```{r}
+x<-read_csv("~/Desktop/DATA450Spring24/Rainfall_Data/RainfallKerala.csv")
+RainfallK<-ts(x$Rainfall,start = 1901,frequency = 12)
+plot(RainfallK, main = "Monthly Rainfall in Kerala from 1901", ylab = "Rainfall (mm)", col = "darkorchid")
+
+
+```
+```{r}
+sluacf(RainfallK, maxlag = 96)
+```
+```{r}
+#ARIMA(1,1,0)x(1,1,0)
+mod110110=Arima(RainfallK,order=c(1,1,0),seasonal=c(1,1,0))
+summary(mod110110)
+sluacf(mod110110$residuals,out=FALSE,maxlag=48)
+```
+
+```{r}
+mod011011=Arima(RainfallK,order=c(0,1,1),seasonal=c(0,1,1))
+summary(mod011011)
+sluacf(mod011011$residuals,out=FALSE,maxlag=48)
+```
+```{r}
+#ARIMA(0,1,2)x(0,1,2)
+mod012012=Arima(RainfallK,order=c(0,1,2),seasonal=c(0,1,2))
+summary(mod012012)
+sluacf(mod012012$residuals,out=FALSE,maxlag=48)
+SSE=sum(mod012012$residuals^2)
+SSZ=sum((RainfallK-mean(RainfallK))^2)
+1-SSE/SSZ # R2
+ts.plot(RainfallK,mod012012$fitted,col=c("black","blue"))
+next123=forecast(mod012012,h=12,level=0.95)
+plot(next123,include=24,shaded=FALSE,showgap=FALSE)
+```
+
