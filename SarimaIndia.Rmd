@@ -1,0 +1,67 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-04-09"
+---
+
+```{r}
+library(ts343)
+library(forecast)
+library(readr)
+```
+
+
+```{r}
+x<-read_csv("~/Desktop/DATA450Spring24/Rainfall_Data/India_annual.csv")
+Rainfall<-ts(x$mean_per_year,start = 1901)
+plot(Rainfall, main = "Monthly Rainfall in India from 1901", ylab = "Rainfall (mm)", col = "darkorchid")
+```
+
+```{r}
+sluacf(Rainfall, maxlag = 96)
+```
+
+```{r}
+#ARIMA(1,1,0)x(1,1,0)
+mod110110=Arima(Rainfall,order=c(1,1,0),seasonal=c(1,1,0))
+summary(mod110110)
+sluacf(mod110110$residuals,out=FALSE,maxlag=96)
+ts.plot(Rainfall,mod110110$fitted,col=c("black","blue"),main="Rainfall with ARIMA(1,1,0)x(1,1,0) fits")
+
+```
+
+
+
+
+```{r}
+mod011011=Arima(Rainfall,order=c(0,1,1),seasonal=c(0,1,1))
+summary(mod011011)
+sluacf(mod011011$residuals,out=FALSE,maxlag=48)
+
+```
+```{r}
+#ARIMA(0,1,2)x(0,1,2)
+mod012012=Arima(Rainfall,order=c(0,1,2),seasonal=c(0,1,2))
+summary(mod012012)
+sluacf(mod012012$residuals,out=FALSE,maxlag=48)
+SSE=sum(mod012012$residuals^2)
+SSZ=sum((Rainfall-mean(Rainfall))^2)
+1-SSE/SSZ # R2
+ts.plot(Rainfall,mod012012$fitted,col=c("black","blue"))
+```
+
+
+#Seasonal Linear trend
+```{r}
+n=length(Rainfall)
+t=1:n
+month=rep(1:12,length.out = n)
+modML=lm(Rainfall~t+factor(month))
+modML
+slunova(modML)
+tsmodml = ts(modML$fitted,start = 1901)
+ts.plot(Rainfall, tsmodml, col = c("blue","red"))
+```
+
+
+

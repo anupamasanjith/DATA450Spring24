@@ -1,0 +1,117 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-03-26"
+---
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+
+# Read the data
+RainfallKerala <- read.csv("~/Desktop/DATA450Spring24/Rainfall_Data/RainfallKerala.csv")
+
+# Prepare data for animation
+animation <- RainfallKerala %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Rainfall_Data/Kerala.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+
+
+```{r}
+library(shiny)
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+
+ui <- fluidPage(
+  titlePanel("Monthly Rainfall (mm) in Kerala, India over the years"),
+  mainPanel(
+    # Display the pre-generated animated plot
+    HTML('<img src="~/Desktop/DATA450Spring24/Rainfall_Data/Kerala.gif">')
+  )
+)
+
+# Server
+server <- function(input, output) {
+  # No need for server logic as the GIF is pre-generated
+}
+
+# Run the app
+shinyApp(ui, server)
+```
+
+```{r}
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Display GIF in Shiny App"),
+  # Define the UI elements
+  mainPanel(
+    # Create a placeholder for the image
+    imageOutput("gif")
+  )
+)
+
+server <- function(input, output) {
+  # Define the server logic to render the GIF
+  output$gif <- renderImage({
+    # Return the path to your GIF file
+    list(src = "Rainfall_Data/Kerala.gif",
+         contentType = "image/gif",
+         width = "500px")  # Adjust the width as needed
+  },
+  deleteFile = FALSE)  # Keep the file after the session ends
+}
+
+shinyApp(ui = ui, server = server)
+```
+

@@ -1,0 +1,75 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-03-07"
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+rain<-read_csv("Kerala-Rainfall-Historical.csv")
+rainall<-read_csv("Rainfall_Data_LL.csv")
+rainall%>%group_by(SUBDIVISION)%>%summarise(n())
+
+```
+
+
+### Kerala 
+```{r}
+RainKerala<-rainall%>%filter(SUBDIVISION=="Kerala")%>%select(YEAR,JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC)%>%pivot_wider(names_from = "YEAR", values_from = c("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"))%>%pivot_longer(cols = everything(), names_to = "month_year", values_to = "Rainfall")%>%separate(month_year, into = c("Month", "Year"), sep = "_")%>% arrange(Year)
+write_csv(RainKerala,"~/Desktop/DATA450Spring24/Rainfall_Data/RainfallKerala.csv")
+```
+### Gujarat
+```{r}
+RainGujarat<-rainall%>%filter(SUBDIVISION=="Gujarat Region")%>%select(YEAR,JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC)%>%pivot_wider(names_from = "YEAR", values_from = c("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"))%>%pivot_longer(cols = everything(), names_to = "month_year", values_to = "Rainfall")%>%separate(month_year, into = c("Month", "Year"), sep = "_")%>% arrange(Year)
+write_csv(RainGujarat,"~/Desktop/DATA450Spring24/Rainfall_Data/RainfallGujarat.csv")
+```
+
+
+### Maharashtra 
+```{r}
+RainMaharashtra<-rainall%>%filter(SUBDIVISION=="Madhya Maharashtra")%>%select(YEAR,JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC)%>%pivot_wider(names_from = "YEAR", values_from = c("JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"))%>%pivot_longer(cols = everything(), names_to = "month_year", values_to = "Rainfall")%>%separate(month_year, into = c("Month", "Year"), sep = "_")%>% arrange(Year)
+write_csv(RainMaharashtra,"~/Desktop/DATA450Spring24/Rainfall_Data/RainfallMaharashtra.csv")
+```
+
+
+```{r}
+annual<-read_csv("~/Desktop/DATA450Spring24/cleaning_&_FullDatasets/annualrainfall.csv")
+monthly<-read_csv("~/Desktop/DATA450Spring24/cleaning_&_FullDatasets/Rainfall_Data_LL.csv")
+```
+
+
+```{r}
+India_annual<-annual %>% group_by(YEAR)%>%summarize(mean_per_year = mean(ANNUAL))
+write_csv(India_annual,"~/Desktop/DATA450Spring24/Rainfall_Data/India_annual.csv")
+
+```
+
+```{r}
+#India_monthly<-
+TRY<-monthly%>%group_by(YEAR)%>%summarize(mean_Jan = mean(JAN),
+                                     mean_Feb = mean(FEB),
+                                     mean_Mar = mean(MAR),
+                                     mean_Apr = mean(APR),
+                                     mean_May = mean(MAY),
+                                     mean_Jun = mean(JUN),
+                                     mean_Jul = mean(JUL),
+                                     mean_Aug = mean(AUG),
+                                     mean_Sep = mean(SEP),
+                                     mean_Oct = mean(OCT),
+                                     mean_Nov = mean(NOV),
+                                     mean_Dec = mean(DEC)
+                                      )
+```
+
+```{r}
+India_Monthly<-TRY%>%pivot_wider(names_from = "YEAR", values_from = c("mean_Jan","mean_Feb","mean_Mar","mean_Apr","mean_May","mean_Jun","mean_Jul","mean_Aug","mean_Sep","mean_Oct","mean_Nov","mean_Dec"))%>%pivot_longer(cols = everything(), names_to = "mean_month_year", values_to = "Rainfall")%>%separate(mean_month_year, into = c("Mean","Month", "Year"), sep = "_")%>% select(-Mean)%>%arrange(Year)
+```
+
+```{r}
+write_csv(India_Monthly,"~/Desktop/DATA450Spring24/Rainfall_Data/India_monthly.csv")
+```
+

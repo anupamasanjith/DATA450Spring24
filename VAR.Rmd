@@ -1,0 +1,118 @@
+---
+title: "VAR"
+output: html_document
+date: "2024-04-09"
+---
+Modelling Monthly Rainfall(mm) in India's Coastal states using Vector Autoregression (VAR)
+```{r}
+library(dplyr)
+library(vars)
+monthly<-read_csv("~/Desktop/DATA450Spring24/cleaning_&_FullDatasets/Rainfall_Data_LL.csv")
+data<-monthly%>%filter(YEAR>=1970 & YEAR<2017)%>%dplyr::select(SUBDIVISION,YEAR,JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC)%>%
+pivot_longer(cols = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL","AUG","SEP","OCT","NOV","DEC"),names_to = "Month", values_to = "Rainfall")%>%
+  mutate(Date = paste(YEAR, Month, sep = "-")) %>%
+  dplyr::select(-YEAR, -Month)%>%
+  pivot_wider(names_from = SUBDIVISION, values_from = Rainfall)
+data2<-monthly%>%filter(YEAR == 2017)%>%dplyr::select(SUBDIVISION,YEAR,JAN,FEB,MAR,APR,MAY,JUN,JUL,AUG,SEP,OCT,NOV,DEC)%>%
+pivot_longer(cols = c("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL","AUG","SEP","OCT","NOV","DEC"),names_to = "Month", values_to = "Rainfall")%>%
+  mutate(Date = paste(YEAR, Month, sep = "-")) %>%
+  dplyr::select(-YEAR, -Month)%>%
+  pivot_wider(names_from = SUBDIVISION, values_from = Rainfall)
+west<-data%>%dplyr::select(Date,Kerala,Lakshadweep,'Madhya Maharashtra','Coastal Karnataka','Konkan & Goa')
+
+
+
+
+```
+
+```{r}
+Rainfall<-as.ts(west[, -1], frequency = 12, start = 1970)
+VARselect(Rainfall, type = "trend", lag.max = 12, season = 12)
+
+```
+
+```{r}
+var_model <- VAR(Rainfall, p = 2, type = "trend", season = 12)
+summary(var_model)
+#acf(residuals(var_model))
+AIC(var_model)
+```
+###Kerala
+```{r}
+forecast<-predict(var_model, n.ahead = 12)
+keralaforecast <- data.frame(forecast$fcst$Kerala[, "fcst"])
+kerala2017<-data2%>%dplyr::select(Kerala)
+```
+
+```{r}
+kerala_ts <- ts(kerala2017$Kerala, start = 2017, frequency = 12)
+forecast_ts <- ts(keralaforecast$forecast.fcst.Kerala....fcst.., start = 2017, frequency = 12)
+
+# Plot the real and forecasted values using ts.plot
+ts.plot(kerala_ts, forecast_ts, col = c("blue","red"))
+```
+###Konkan & Goa
+```{r}
+Goaforecast <- data.frame(forecast$fcst$Konkan...Goa[, "fcst"])
+Goa2017<-data2%>%dplyr::select('Konkan & Goa')
+
+```
+
+```{r}
+Goa_ts <- ts(Goa2017, start = 2017, frequency = 12)
+Goafore_ts <- ts(Goaforecast, start = 2017, frequency = 12)
+
+# Plot the real and forecasted values using ts.plot
+ts.plot(Goa_ts, Goafore_ts, col = c("blue","red"))
+```
+
+
+### Karnataka 
+```{r}
+Karforecast<-data.frame(forecast$fcst$Coastal.Karnataka[, "fcst"])
+Kar2017<-data2%>%dplyr::select('Coastal Karnataka')
+
+```
+
+```{r}
+Kar_ts <- ts(Kar2017, start = 2017, frequency = 12)
+Karfore_ts <- ts(Karforecast, start = 2017, frequency = 12)
+
+# Plot the real and forecasted values using ts.plot
+ts.plot(Kar_ts, Karfore_ts, col = c("blue","red"))
+```
+
+###Madhya Maharashtra
+
+```{r}
+Madforecast<-data.frame(forecast$fcst$Madhya.Maharashtra[, "fcst"])
+Mad2017<-data2%>%dplyr::select('Madhya Maharashtra')
+
+```
+
+```{r}
+Mad_ts <- ts(Mad2017, start = 2017, frequency = 12)
+Madfore_ts <- ts(Madforecast, start = 2017, frequency = 12)
+
+# Plot the real and forecasted values using ts.plot
+ts.plot(Mad_ts, Madfore_ts, col = c("blue","red"))
+```
+
+###Lakshadweep
+## data :- http://hydro.imd.gov.in/hydrometweb/(S(0x1t0y55wwukfpudrsbvn355))/PRODUCTS/Publications/Rainfall%20Statistics%20of%20India%20-%202017/Rainfall%20Statistics%20of%20India%20-%202017.pdf
+
+```{r}
+Lakforecast<-data.frame(forecast$fcst$Lakshadweep[, "fcst"])
+Lak2017<-data.frame(Rainfall = c(21.3,0.9,100.2,1.8,145.7,521.9,164.2,206.2,216.0,137.1,63.5,160.1))
+
+```
+
+```{r}
+Lak_ts <- ts(Lak2017, start = 2017, frequency = 12)
+Lakfore_ts <- ts(Lakforecast, start = 2017, frequency = 12)
+
+# Plot the real and forecasted values using ts.plot
+ts.plot(Lak_ts, Lakfore_ts, col = c("blue","red"))
+```
+
+

@@ -1,0 +1,43 @@
+---
+title: "sf"
+output: html_document
+date: "2024-03-26"
+---
+
+```{r}
+library(sf)
+```
+
+```{r}
+x<-read_sf("~/Downloads/IND_adm/IND_adm1.shp")
+x
+```
+
+```{r}
+library(readr)
+Rainfall_Data_LL <- read_csv("cleaning_&_FullDatasets/Rainfall_Data_LL.csv")
+new_only_annual<- Rainfall_Data_LL%>%select(SUBDIVISION,YEAR,ANNUAL)
+new_only_annual%>%group_by(SUBDIVISION)%>%summarise(count = n())
+head(Rainfall_Data_LL)
+```
+```{r}
+yearly_datasets <- split(Rainfall_Data_LL, Rainfall_Data_LL$YEAR)
+
+for (year in names(yearly_datasets)) {
+  yearly_datasets[[year]] <- yearly_datasets[[year]] %>%
+    select(SUBDIVISION, YEAR, ANNUAL, Latitude, Longitude) %>%
+    st_as_sf(coords = c("Longitude", "Latitude"), crs = st_crs(x))
+}
+names(yearly_datasets)
+ggplot() +
+      geom_sf(data = x) +
+      geom_sf(data = yearly_datasets[["2017"]], aes(color = ANNUAL), size = 5) +
+      theme_minimal() +
+      labs(title = paste("Rainfall in India - Year", 2017))
+
+```
+
+```{r}
+save(yearly_datasets,file = "yearly_datasets.RData")
+```
+
