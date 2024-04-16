@@ -5,6 +5,7 @@ date: "2024-04-09"
 ---
 Modelling Monthly Rainfall(mm) in India's Coastal states using Vector Autoregression (VAR)
 ```{r}
+library(tidyverse)
 library(dplyr)
 library(vars)
 monthly<-read_csv("~/Desktop/DATA450Spring24/cleaning_&_FullDatasets/Rainfall_Data_LL.csv")

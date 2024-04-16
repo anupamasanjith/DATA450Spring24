@@ -2,7 +2,7 @@ library(shiny)
 library(sf)
 library(ggplot2)
 
-load("yearly_datasets.Rdata")
+load("yearly_datasets.RData")
 x <- read_sf("IND_adm/IND_adm1.shp")
 choices<-c("Kerala")
 ui <- fluidPage(
@@ -75,7 +75,7 @@ server <- function(input, output, session) {
   
   output$gif <- renderImage({
     if (!is.null(data_type()) && input$run_btn > 0 && data_type() == "Monthly") {
-      gif_path <- file.path("~/Desktop/DATA450Spring24/MainProjectSYE", paste0(input$state, ".gif"))
+      gif_path <- file.path(paste0(input$state, ".gif"))
       list(src = gif_path,
            contentType = "image/gif",
            width = "500px")
