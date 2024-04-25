@@ -1,6 +1,8 @@
 ---
 title: "VAR"
-output: html_document
+output:
+  word_document: default
+  html_document: default
 date: "2024-04-09"
 ---
 Modelling Monthly Rainfall(mm) in India's Coastal states using Vector Autoregression (VAR)
@@ -50,8 +52,14 @@ kerala_ts <- ts(kerala2017$Kerala, start = 2017, frequency = 12)
 forecast_ts <- ts(keralaforecast$forecast.fcst.Kerala....fcst.., start = 2017, frequency = 12)
 
 # Plot the real and forecasted values using ts.plot
-ts.plot(kerala_ts, forecast_ts, col = c("blue","red"))
+ts.plot(kerala_ts, forecast_ts, col = c("blue","red"), xlab = "Time", ylab = "Rainfall (mm)", main = "Kerala: Actual vs Forecasted Values")
+legend("topright", legend = c("Actual", "Forecast"), col = c("blue", "red"), lty = 1)
 ```
+
+
+
+
+
 ###Konkan & Goa
 ```{r}
 Goaforecast <- data.frame(forecast$fcst$Konkan...Goa[, "fcst"])
@@ -64,7 +72,8 @@ Goa_ts <- ts(Goa2017, start = 2017, frequency = 12)
 Goafore_ts <- ts(Goaforecast, start = 2017, frequency = 12)
 
 # Plot the real and forecasted values using ts.plot
-ts.plot(Goa_ts, Goafore_ts, col = c("blue","red"))
+ts.plot(Goa_ts, Goafore_ts, col = c("blue","red"),xlab = "Time", ylab = "Rainfall (mm)", main = "Goa: Actual vs Forecasted Values")
+legend("topright", legend = c("Actual", "Forecast"), col = c("blue", "red"), lty = 1)
 ```
 
 
@@ -80,7 +89,8 @@ Kar_ts <- ts(Kar2017, start = 2017, frequency = 12)
 Karfore_ts <- ts(Karforecast, start = 2017, frequency = 12)
 
 # Plot the real and forecasted values using ts.plot
-ts.plot(Kar_ts, Karfore_ts, col = c("blue","red"))
+ts.plot(Kar_ts, Karfore_ts, col = c("blue","red"),xlab = "Time", ylab = "Rainfall (mm)", main = "Karnataka: Actual vs Forecasted Values")
+legend("topright", legend = c("Actual", "Forecast"), col = c("blue", "red"), lty = 1)
 ```
 
 ###Madhya Maharashtra
@@ -96,7 +106,8 @@ Mad_ts <- ts(Mad2017, start = 2017, frequency = 12)
 Madfore_ts <- ts(Madforecast, start = 2017, frequency = 12)
 
 # Plot the real and forecasted values using ts.plot
-ts.plot(Mad_ts, Madfore_ts, col = c("blue","red"))
+ts.plot(Mad_ts, Madfore_ts, col = c("blue","red"),xlab = "Time", ylab = "Rainfall (mm)", main = "Maharashtra: Actual vs Forecasted Values")
+legend("topright", legend = c("Actual", "Forecast"), col = c("blue", "red"), lty = 1)
 ```
 
 ###Lakshadweep
@@ -113,7 +124,20 @@ Lak_ts <- ts(Lak2017, start = 2017, frequency = 12)
 Lakfore_ts <- ts(Lakforecast, start = 2017, frequency = 12)
 
 # Plot the real and forecasted values using ts.plot
-ts.plot(Lak_ts, Lakfore_ts, col = c("blue","red"))
+ts.plot(Lak_ts, Lakfore_ts, col = c("blue","red"),xlab = "Time", ylab = "Rainfall (mm)", main = "Lakshadweep: Actual vs Forecasted Values")
+legend("topright", legend = c("Actual", "Forecast"), col = c("blue", "red"), lty = 1)
 ```
+
+```{r}
+acf(residuals(var_model)[,1])
+```
+
+```{r}
+library(qrcode)
+library(ggplot2)
+```
+
+```{r}
+plot(qr_code("https://stlawu.shinyapps.io/coastal_india_rainfall/"))
 
 

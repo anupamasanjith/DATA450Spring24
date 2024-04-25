@@ -1,0 +1,1932 @@
+---
+title: "GIFS"
+output: html_document
+date: "2024-04-25"
+---
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+```
+
+# Read the data
+RainfallKerala <- read.csv("~/Desktop/DATA450Spring24/Rainfall_Data/RainfallKerala.csv")
+
+# Prepare data for animation
+animation <- RainfallKerala %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+# Save the animation
+animate(animation, fps = 5, nframes = 700)
+
+
+```{r}
+# List of states
+states <- c("Andaman&NicobarIslands", "ArunachalPradesh", "Assam&Meghalaya", "Bihar", "Chhattisgarh",
+            "CoastalAndhraPradesh", "CoastalKarnataka", "EastMadhyaPradesh", "EastRajasthan", 
+            "EastUttarPradesh", "GangeticWestBengal", "GujaratRegion", "HaryanaDelhi&Chandigarh", 
+            "HimachalPradesh", "Jammu&Kashmir", "Jharkhand", "Kerala", "Konkan&Goa", "Lakshadweep", 
+            "MadhyaMaharashtra", "Matathwada", "NagaManiMizoTripura", "NorthInteriorKarnataka", 
+            "Orissa", "Punjab", "Rayalseema", "Saurashtra&Kutch", "SouthInteriorKarnataka", 
+            "SubHimalayanWestBengal&Sikkim", "TamilNadu", "Telangana", "Uttarakhand", 
+            "Vidarbha", "WestMadhyaPradesh", "WestRajasthan", "WestUttarPradesh")
+
+
+# Read CSV files for each state
+for (state in states) {
+  assign(paste0("Rainfall", state), read.csv(paste0("~/Desktop/DATA450Spring24/Rainfall_Data/Rainfall", state, ".csv")))
+}
+```
+
+
+###Andaman and nicobar 
+
+```{r}
+# Prepare data for animation
+animation <- `RainfallAndaman&NicobarIslands` %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Andaman & Nicobar Islands.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+
+```{r}
+# Prepare data for animation
+animation <- RainfallArunachalPradesh %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Arunachal Pradesh.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+
+```{r}
+# Prepare data for animation
+animation <- `RainfallAssam&Meghalaya` %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Assam & Meghalaya.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallBihar %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Bihar.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallChhattisgarh %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Chhattisgarh.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallCoastalAndhraPradesh %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Coastal Andhra Pradesh.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallCoastalKarnataka %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Coastal Karnataka.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallEastMadhyaPradesh %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/East Madhya Pradesh.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallEastRajasthan %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/East Rajasthan.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallEastUttarPradesh %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/East Uttar Pradesh.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallGangeticWestBengal %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Gangetic West Bengal.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallGujaratRegion %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Gujarat Region.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- `RainfallHaryanaDelhi&Chandigarh` %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Haryana Delhi & Chandigarh .gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallHimachalPradesh %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Himachal Pradesh.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- `RainfallJammu&Kashmir` %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Jammu & Kashmir.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallJharkhand %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Jharkhand.gif", animate(animation, fps = 5, nframes = 700))
+```
+```{r}
+animation <- `RainfallKonkan&Goa` %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Konkan & Goa.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+
+```{r}
+animation <- RainfallLakshadweep %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Lakshadweep.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallMadhyaMaharashtra %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Madhya Maharashtra.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallMatathwada %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Matathwada.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallNagaManiMizoTripura %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/NagaManiMizoTripura.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallNorthInteriorKarnataka %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/North Interior Karnataka.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallOrissa %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Orissa.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallPunjab %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Punjab.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallRayalseema %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Rayalseema.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- `RainfallSaurashtra&Kutch` %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Saurashtra & Kutch.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallSouthInteriorKarnataka %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/South Interior Karnataka.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- `RainfallSubHimalayanWestBengal&Sikkim` %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Sub Himalayan West Bengal & Sikkim.gif", animate(animation, fps = 5, nframes = 700))
+
+```
+
+```{r}
+animation <- RainfallTamilNadu %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Tamil Nadu.gif", animate(animation, fps = 5, nframes = 700))
+
+```
+
+```{r}
+animation <- RainfallUttarakhand %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Uttarakhand.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallVidarbha %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/Vidarbha.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallWestMadhyaPradesh %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/West Madhya Pradesh.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallWestRajasthan %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/West Rajasthan.gif", animate(animation, fps = 5, nframes = 700))
+```
+
+```{r}
+animation <- RainfallWestUttarPradesh %>%
+  group_by(Year) %>%
+  mutate(rank = as.numeric(row_number(Rainfall))) %>%
+  ggplot() +
+  geom_col(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      fill = as.factor(Month)
+    ),
+    width = 0.9,
+    alpha = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = 0,
+      label = Month
+    ),
+    vjust = 0.2,
+    hjust = 1
+  ) +
+  geom_text(
+    mapping = aes(
+      x = rank,
+      y = Rainfall,
+      label = as.factor(Rainfall)
+    ),
+    vjust = 0.2,
+    hjust = 0
+  ) +
+  coord_flip(
+    clip = "off",
+    expand = FALSE,
+    xlim = c(0.5, 12.5)
+  ) +
+  scale_y_continuous(labels = scales::comma) +
+  guides(color = FALSE, fill = FALSE) +
+  labs(title = "{closest_state}", x = "", y = "Rainfall (mm)") +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 32),
+    axis.ticks.y = element_blank(),
+    axis.text.y = element_blank(),
+    plot.margin = margin(1, 3, 1, 4, "cm")
+  ) +
+  transition_states(Year, transition_length = 4, state_length = 1) +#0.01
+  ease_aes("cubic-in-out")
+
+#animate(animation, fps = 5, nframes = 700)
+# Save the animation
+anim_save("~/Desktop/DATA450Spring24/West Uttar Pradesh.gif", animate(animation, fps = 5, nframes = 700))
+```
+
